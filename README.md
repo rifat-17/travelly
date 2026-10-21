@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Travel Planner
 
-## Getting Started
+A small Next.js app for planning trips: destinations, dates, notes, and a per-user trip list.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router, Turbopack, React Compiler)
+- React 19 + Tailwind CSS v4 + shadcn/ui (Base UI)
+- Prisma 7 with the `pg` driver adapter (Prisma Postgres)
+- Neon Auth (hosted Better Auth) for email/password sessions
+
+## Environment
+
+Create a `.env` file with:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+DATABASE_URL="postgresql://..."
+NEON_AUTH_BASE_URL="https://<endpoint>.neonauth.<region>.aws.neon.tech/<db>/auth"
+NEON_AUTH_COOKIE_SECRET="<at least 32 random characters>"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Generate a cookie secret with:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+openssl rand -base64 32
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Neon Auth setup
 
-## Learn More
+1. Open your project at [console.neon.tech](https://console.neon.tech).
+2. Open **Auth** (Better Auth) and click **Enable Auth**.
+3. Copy the Auth URL from **Settings → Better Auth → Project Info**.
+4. Paste it into `NEON_AUTH_BASE_URL` in `.env`.
+5. Restart the dev server.
 
-To learn more about Next.js, take a look at the following resources:
+The app uses Neon Auth as the auth provider only; trip data stays in your own Postgres database (`DATABASE_URL`).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Getting started
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm install
+npx prisma migrate deploy
+npm run dev
+```
 
-## Deploy on Vercel
+Open [http://localhost:3000](http://localhost:3000), create an account, and start adding trips.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run dev     # start the dev server
+npm run build   # production build
+npm run start   # run the production build
+npm run lint    # eslint
+```
+
+## Notes
+
+- `/trips` and `/trips/new` are protected by `src/proxy.ts` and require a signed-in user.
+- Trips are scoped by `Trip.userId`. Trips created before auth was enabled (with a `null` owner) are claimed by the first user who signs in.
