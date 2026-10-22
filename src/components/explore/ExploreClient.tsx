@@ -11,7 +11,7 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { WorldGlobe } from "@/components/explore/WorldGlobe";
 import { TripStatusBadge } from "@/components/TripStatusBadge";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -193,7 +193,7 @@ function FilterToggle({
           aria-pressed={filter === item.value}
           onClick={() => onChange(item.value)}
           className={cn(
-            "rounded-md px-2.5 py-1 text-xs font-medium transition-colors",
+            "min-h-8 rounded-md px-2.5 py-1 text-xs font-medium transition-colors",
             filter === item.value
               ? "bg-background text-foreground shadow-sm"
               : "text-muted-foreground hover:text-foreground"
@@ -306,6 +306,7 @@ function CountryPanel({
             type="button"
             variant="ghost"
             size="icon-sm"
+            className="size-9 lg:size-7"
             onClick={onClear}
             aria-label={`Clear ${country.name}`}
           >
@@ -375,7 +376,7 @@ function CountryPanel({
               ? `/trips/new?destination=${encodeURIComponent(country.name)}`
               : "/auth/sign-up"
           }
-          className={buttonVariants({ className: "w-full" })}
+          className={buttonVariants({ className: "h-10 w-full lg:h-8" })}
         >
           {isSignedIn
             ? `Plan a trip to ${country.name}`
@@ -455,6 +456,7 @@ export function ExploreClient({
     initialSelected
   );
   const [filter, setFilter] = useState<ExploreFilter>("all");
+  const panelRef = useRef<HTMLDivElement>(null);
 
   const countriesByCode = useMemo(
     () => new Map(countries.map((country) => [country.code, country])),
@@ -581,6 +583,15 @@ export function ExploreClient({
       "",
       `${url.pathname}${url.search}${url.hash}`
     );
+
+    if (code && window.innerWidth < 768) {
+      requestAnimationFrame(() => {
+        panelRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      });
+    }
   }
 
   function surpriseMe() {
@@ -639,13 +650,18 @@ export function ExploreClient({
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <Button type="button" variant="outline" onClick={surpriseMe}>
+              <Button
+                type="button"
+                variant="outline"
+                className="h-9 lg:h-8"
+                onClick={surpriseMe}
+              >
                 <Shuffle className="size-4" />
                 Surprise me
               </Button>
               <Link
                 href={isSignedIn ? "/trips/new" : "/auth/sign-up"}
-                className={buttonVariants()}
+                className={buttonVariants({ className: "h-9 lg:h-8" })}
               >
                 {isSignedIn ? "Plan a trip" : "Create an account"}
               </Link>
@@ -694,8 +710,8 @@ export function ExploreClient({
           {selectedCountry ? `Selected ${selectedCountry.name}` : ""}
         </p>
 
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(340px,0.85fr)] lg:items-start">
-          <Card className="overflow-hidden lg:col-start-1 lg:row-start-1">
+        <div className="grid gap-6 md:grid-cols-[minmax(0,1.15fr)_minmax(280px,0.85fr)] md:items-start">
+          <Card className="overflow-hidden md:col-start-1 md:row-start-1">
               <CardHeader className="border-b">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <select
@@ -704,7 +720,7 @@ export function ExploreClient({
                     onChange={(event) =>
                       selectCountry(event.target.value || null)
                     }
-                    className="border-input bg-background focus-visible:border-ring focus-visible:ring-ring/50 h-9 w-full min-w-0 rounded-lg border px-3 text-sm shadow-xs outline-none focus-visible:ring-3 sm:w-56"
+                    className="border-input bg-background focus-visible:border-ring focus-visible:ring-ring/50 h-10 w-full min-w-0 rounded-lg border px-3 text-sm shadow-xs outline-none focus-visible:ring-3 lg:h-9 lg:w-56"
                   >
                     <option value="">Jump to a country…</option>
                     {regionOptions.map((region) => (
@@ -743,7 +759,10 @@ export function ExploreClient({
               </CardContent>
             </Card>
 
-            <div className="lg:col-start-2 lg:row-start-1">
+            <div
+              ref={panelRef}
+              className="scroll-mt-20 md:col-start-2 md:row-start-1"
+            >
               <CountryPanel
                 country={selectedCountry}
                 stats={selectedStats}
@@ -753,14 +772,14 @@ export function ExploreClient({
               />
             </div>
 
-            <Card className="lg:col-start-1 lg:row-start-2">
+            <Card className="md:col-start-1 md:row-start-2">
               <CardHeader className="border-b">
                 <CardTitle>Your countries</CardTitle>
                 <CardDescription>{cardDescription}</CardDescription>
               </CardHeader>
               <CardContent>
                 {countryCards.length > 0 ? (
-                  <div className="grid gap-2 sm:grid-cols-2">
+                  <div className="grid gap-2 lg:grid-cols-2">
                     {countryCards.map((country) => {
                       const countryStats = stats[country.code];
                       const isSelected = selectedCode === country.code;
@@ -817,14 +836,20 @@ export function ExploreClient({
                       {!isSignedIn ? (
                         <Link
                           href="/auth/sign-in"
-                          className={buttonVariants({ size: "sm" })}
+                          className={buttonVariants({
+                            size: "sm",
+                            className: "h-9 lg:h-7",
+                          })}
                         >
                           Sign in
                         </Link>
                       ) : mappedTrips.length === 0 ? (
                         <Link
                           href="/trips/new"
-                          className={buttonVariants({ size: "sm" })}
+                          className={buttonVariants({
+                            size: "sm",
+                            className: "h-9 lg:h-7",
+                          })}
                         >
                           Plan a trip
                         </Link>
@@ -833,6 +858,7 @@ export function ExploreClient({
                           type="button"
                           variant="outline"
                           size="sm"
+                          className="h-9 lg:h-7"
                           onClick={() => setFilter("all")}
                         >
                           Show all
@@ -844,7 +870,7 @@ export function ExploreClient({
               </CardContent>
             </Card>
 
-            <div className="lg:col-start-2 lg:row-start-2">
+            <div className="md:col-start-2 md:row-start-2">
               <RegionBreakdown
                 rows={regionCounts}
                 total={mappedTrips.length}

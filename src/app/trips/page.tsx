@@ -27,7 +27,10 @@ const TripsPage = async () => {
               : `${trips.length} ${trips.length === 1 ? "trip" : "trips"} planned.`}
           </p>
         </div>
-        <Link href="/trips/new" className={buttonVariants()}>
+        <Link
+          href="/trips/new"
+          className={buttonVariants({ className: "h-9 lg:h-8" })}
+        >
           New Trip
         </Link>
       </div>
@@ -39,7 +42,10 @@ const TripsPage = async () => {
             <p className="text-muted-foreground max-w-sm text-sm">
               Create a trip to keep track of where you are going and when.
             </p>
-            <Link href="/trips/new" className={buttonVariants()}>
+            <Link
+              href="/trips/new"
+              className={buttonVariants({ className: "h-9 lg:h-8" })}
+            >
               Plan a trip
             </Link>
           </CardContent>

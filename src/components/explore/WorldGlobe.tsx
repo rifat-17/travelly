@@ -495,7 +495,7 @@ export function WorldGlobe({
           variant="outline"
           size="icon-sm"
           aria-label={autoRotate ? "Pause globe rotation" : "Start globe rotation"}
-          className="bg-background/70 backdrop-blur"
+          className="size-9 bg-background/70 backdrop-blur lg:size-7"
           onClick={() => setAutoRotate((value) => !value)}
         >
           {autoRotate ? <Pause /> : <Play />}
@@ -505,7 +505,7 @@ export function WorldGlobe({
           variant="outline"
           size="icon-sm"
           aria-label="Reset globe view"
-          className="bg-background/70 backdrop-blur"
+          className="size-9 bg-background/70 backdrop-blur lg:size-7"
           onClick={handleReset}
         >
           <RotateCcw />

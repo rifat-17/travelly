@@ -125,7 +125,10 @@ const HomePage = async () => {
                     </div>
                     <Link
                       href="/auth/sign-in"
-                      className={buttonVariants({ size: "sm" })}
+                      className={buttonVariants({
+                        size: "sm",
+                        className: "h-9 lg:h-7",
+                      })}
                     >
                       Sign in
                     </Link>
@@ -150,7 +153,10 @@ const HomePage = async () => {
                     </div>
                     <Link
                       href="/trips/new"
-                      className={buttonVariants({ size: "sm" })}
+                      className={buttonVariants({
+                        size: "sm",
+                        className: "h-9 lg:h-7",
+                      })}
                     >
                       Plan a trip
                     </Link>
@@ -248,7 +254,7 @@ const HomePage = async () => {
             </p>
             <Link
               href={user ? "/trips/new" : "/auth/sign-up"}
-              className={buttonVariants()}
+              className={buttonVariants({ size: "lg" })}
             >
               {user ? "Plan a trip" : "Get started"}
             </Link>

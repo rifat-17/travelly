@@ -23,7 +23,7 @@ const Navbar = async () => {
           <Link
             href="/explore"
             aria-label="Explore the world"
-            className="inline-flex items-center gap-1.5 rounded-lg text-sm font-medium text-foreground/90 transition-colors hover:text-sky-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70"
+            className="inline-flex size-9 items-center justify-center gap-1.5 rounded-lg text-sm font-medium text-foreground/90 transition-colors hover:text-sky-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 sm:w-auto sm:justify-start sm:px-1"
           >
             <Globe2 className="size-4 sm:hidden" />
             <span className="hidden sm:inline">Explore</span>
@@ -34,7 +34,7 @@ const Navbar = async () => {
               <Link
                 href="/trips"
                 aria-label="My trips"
-                className="inline-flex items-center gap-1.5 rounded-lg text-sm font-medium text-foreground/90 transition-colors hover:text-sky-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70"
+                className="inline-flex size-9 items-center justify-center gap-1.5 rounded-lg text-sm font-medium text-foreground/90 transition-colors hover:text-sky-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 sm:w-auto sm:justify-start sm:px-1"
               >
                 <MapPin className="size-4 sm:hidden" />
                 <span className="hidden sm:inline">My Trips</span>
@@ -43,7 +43,12 @@ const Navbar = async () => {
                 {user.name || user.email}
               </span>
               <form action={signOut}>
-                <Button type="submit" variant="outline" size="sm">
+                <Button
+                  type="submit"
+                  variant="outline"
+                  size="sm"
+                  className="h-9 lg:h-7"
+                >
                   Sign out
                 </Button>
               </form>
@@ -52,13 +57,16 @@ const Navbar = async () => {
             <>
               <Link
                 href="/auth/sign-in"
-                className="text-sm font-medium text-foreground/90 transition-colors hover:text-sky-400"
+                className="inline-flex h-9 items-center rounded-lg px-1.5 text-sm font-medium text-foreground/90 transition-colors hover:text-sky-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 sm:px-0"
               >
                 Sign in
               </Link>
               <Link
                 href="/auth/sign-up"
-                className={buttonVariants({ size: "sm" })}
+                className={buttonVariants({
+                  size: "sm",
+                  className: "h-9 lg:h-7",
+                })}
               >
                 Sign up
               </Link>

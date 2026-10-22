@@ -34,7 +34,7 @@ export function Logo({ className, showWordmark = true }: LogoProps) {
       </span>
 
       {showWordmark ? (
-        <span className="text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+        <span className="max-[359px]:hidden text-lg font-semibold tracking-tight text-foreground sm:text-xl">
           Travel{" "}
           <span className="bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent">
             Planner

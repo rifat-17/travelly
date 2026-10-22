@@ -147,11 +147,21 @@ export function TripForm({
         </p>
       ) : null}
 
-      <div className="flex items-center gap-3 pt-2">
-        <Button type="submit" disabled={pending}>
+      <div className="flex flex-wrap items-center gap-3 pt-2">
+        <Button
+          type="submit"
+          className="h-10 lg:h-8"
+          disabled={pending}
+        >
           {pending ? pendingLabel : submitLabel}
         </Button>
-        <Link href={cancelHref} className={buttonVariants({ variant: "outline" })}>
+        <Link
+          href={cancelHref}
+          className={buttonVariants({
+            variant: "outline",
+            className: "h-10 lg:h-8",
+          })}
+        >
           Cancel
         </Link>
       </div>

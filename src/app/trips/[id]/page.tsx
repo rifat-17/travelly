@@ -88,7 +88,11 @@ const TripDetailPage = async ({ params }: PageProps<"/trips/[id]">) => {
             <TripStatusBadge status={status} />
             <Link
               href={`/trips/${trip.id}/edit`}
-              className={buttonVariants({ variant: "outline", size: "sm" })}
+              className={buttonVariants({
+                variant: "outline",
+                size: "sm",
+                className: "h-9 lg:h-7",
+              })}
             >
               <Pencil className="size-3.5" />
               Edit trip

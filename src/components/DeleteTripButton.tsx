@@ -8,9 +8,11 @@ import { Button } from "@/components/ui/button";
 export function DeleteTripButton({
   tripId,
   title,
+  className,
 }: {
   tripId: string;
   title: string;
+  className?: string;
 }) {
   const [pending, startTransition] = useTransition();
 
@@ -19,6 +21,7 @@ export function DeleteTripButton({
       type="button"
       variant="destructive"
       size="icon-sm"
+      className={className}
       aria-label={`Delete ${title}`}
       title="Delete trip"
       disabled={pending}

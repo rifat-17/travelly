@@ -100,7 +100,11 @@ function TripCard({ trip, className }: { trip: TripCardTrip; className?: string 
           <Link
             href={`/trips/${trip.id}/edit`}
             aria-label={`Edit ${trip.title}`}
-            className={buttonVariants({ variant: "outline", size: "sm" })}
+            className={buttonVariants({
+              variant: "outline",
+              size: "sm",
+              className: "h-9 lg:h-7",
+            })}
           >
             <Pencil className="size-3.5" />
             Edit
@@ -112,6 +116,7 @@ function TripCard({ trip, className }: { trip: TripCardTrip; className?: string 
               type="submit"
               variant={completed ? "secondary" : "outline"}
               size="sm"
+              className="h-9 lg:h-7"
               aria-label={
                 completed
                   ? `Reopen ${trip.title}`
@@ -127,7 +132,11 @@ function TripCard({ trip, className }: { trip: TripCardTrip; className?: string 
             </Button>
           </form>
 
-          <DeleteTripButton tripId={trip.id} title={trip.title} />
+          <DeleteTripButton
+            tripId={trip.id}
+            title={trip.title}
+            className="size-9 lg:size-7"
+          />
         </div>
       </CardFooter>
     </Card>
