@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { getAuthErrorMessage } from "@/lib/auth/errors";
 import { auth } from "@/lib/auth/server";
 
 export type AuthFormState = {
@@ -28,9 +29,10 @@ export async function signInWithEmail(
 
     if (error) {
       return {
-        error:
-          error.message ||
-          "Unable to sign in. Check your email and password and try again.",
+        error: await getAuthErrorMessage(
+          error,
+          "Unable to sign in. Check your email and password and try again."
+        ),
       };
     }
   } catch (error) {

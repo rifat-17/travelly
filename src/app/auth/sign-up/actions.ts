@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { getAuthErrorMessage } from "@/lib/auth/errors";
 import { auth } from "@/lib/auth/server";
 
 export type AuthFormState = {
@@ -42,7 +43,10 @@ export async function signUpWithEmail(
 
     if (error) {
       return {
-        error: error.message || "Unable to create your account. Try again.",
+        error: await getAuthErrorMessage(
+          error,
+          "Unable to create your account. Try again."
+        ),
       };
     }
   } catch (error) {
