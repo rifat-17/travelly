@@ -63,7 +63,7 @@ const HomePage = async () => {
         <div className="container relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 md:grid-cols-2 md:py-24">
           <div className="space-y-6">
             <p className="text-sm font-medium tracking-widest text-sky-600 uppercase dark:text-sky-400">
-              Travel Planner
+              Travel Planny
             </p>
             <h1 className="text-4xl font-bold tracking-tight text-balance sm:text-5xl">
               Plan your next trip, one day at a time.
